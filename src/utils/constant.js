@@ -17,6 +17,7 @@ export const TOKEN = "token";
 export const MJX_DATA_FORMULA = "data-formula";
 export const MJX_DATA_FORMULA_TYPE = "data-formula-type";
 
+export const NOTION_SECRET_KEY = "notion_secret_key";
 export const CONTENT = "content";
 export const STYLE = "style";
 export const TEMPLATE_NUM = "template_num";

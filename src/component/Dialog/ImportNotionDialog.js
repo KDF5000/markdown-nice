@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {observer, inject} from "mobx-react";
 import {Modal, Input, message} from "antd";
-
 import notionToMarkdown from "../../utils/notionConverter";
+import {NOTION_SECRET_KEY} from "../../utils/constant";
 
 @inject("dialog")
 @inject("content")
@@ -10,8 +10,9 @@ import notionToMarkdown from "../../utils/notionConverter";
 class ImportNotionDialog extends Component {
   constructor(props) {
     super(props);
+    const lastKey = window.localStorage.getItem(NOTION_SECRET_KEY);
     this.state = {
-      secretKey: "",
+      secretKey: lastKey,
       pageId: "",
     };
   }
@@ -34,6 +35,7 @@ class ImportNotionDialog extends Component {
         this.props.content.setContent(content);
         const {markdownEditor} = this.props.content;
         markdownEditor.focus();
+        window.localStorage.setItem(NOTION_SECRET_KEY, this.state.secretKey);
       } else {
         message.error("转换失败，请重试~");
       }
@@ -75,7 +77,7 @@ class ImportNotionDialog extends Component {
           <span>Notion Page ID: </span>
           <Input value={pageId} placeholder="Notion文档id" style={{margin: "6px 0px"}} onChange={this.handlePageId} />
           <span>提示：SecretKey和Page ID获取方法参考 </span>
-          <a id="nice-sitdown-dialog-doc" rel="noopener noreferrer" target="_blank" href="https://dub.sh/nomo">
+          <a id="nice-sitdown-dialog-doc" rel="noopener noreferrer" target="_blank" href="https://dub.sh/notion2md">
             获取Notion密钥和Page ID
           </a>
         </Modal>
